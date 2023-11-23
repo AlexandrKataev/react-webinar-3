@@ -26,3 +26,15 @@ export function createElement(name, props = {}, ...children) {
 
   return element;
 }
+
+/**
+ * Создание сообщения о количестве выделений элемента
+ * @param {Number} count Количество выделений элемента
+ * @returns {String}
+ */
+export function getSelectionCountMessage(count) {
+  if (count.toString().match(/[234]$/) && (count < 10 || count > 20)) {
+    return `Выделяли ${count} раза`;
+  }
+  return `Выделяли ${count} раз`;
+};
