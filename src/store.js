@@ -6,7 +6,7 @@ import { generateItemCode } from "./utils";
 class Store {
   constructor(initState = {}) {
     this.state = initState;
-		this.state.list.forEach(el => el.code = generateItemCode())
+    this.state.list.forEach(el => el.code = generateItemCode())
     this.listeners = []; // Слушатели изменений состояния
   }
 
