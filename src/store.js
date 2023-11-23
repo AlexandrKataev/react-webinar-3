@@ -1,11 +1,13 @@
+import { generateItemCode } from "./utils";
+
 /**
  * Хранилище состояния приложения
  */
 class Store {
   constructor(initState = {}) {
     this.state = initState;
+		this.state.list.forEach(el => el.code = generateItemCode())
     this.listeners = []; // Слушатели изменений состояния
-    this.newItemId = initState.list.length + 1; // уникальный ID для новой записи
   }
 
   /**
@@ -45,9 +47,8 @@ class Store {
   addItem() {
     this.setState({
       ...this.state,
-      list: [...this.state.list, {code: this.newItemId, title: 'Новая запись'}] 
+      list: [...this.state.list, {code: generateItemCode(), title: 'Новая запись'}] 
     })
-    this.newItemId++;
   };
 
   /**
