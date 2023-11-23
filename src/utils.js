@@ -33,7 +33,8 @@ export function createElement(name, props = {}, ...children) {
  * @returns {String}
  */
 export function getSelectionCountMessage(count) {
-  if (count.toString().match(/[234]$/) && (count < 10 || count > 20)) {
+	const str = count.toString()
+  if (str.match(/[234]$/) && +str.slice(-2)[0] !== 1) {
     return `Выделяли ${count} раза`;
   }
   return `Выделяли ${count} раз`;
