@@ -24,7 +24,7 @@ function Cart({ onCloseCart, cartList, onDeleteFromCart, totalPrice }) {
                 onDeleteFromCart={onDeleteFromCart}
               />
               <div className="Cart-body-total">
-                <b>Итого</b>
+                <b style={{ marginRight: "30px" }}>Итого</b>
                 <b>{formatCurrency(totalPrice)}</b>
               </div>
             </>

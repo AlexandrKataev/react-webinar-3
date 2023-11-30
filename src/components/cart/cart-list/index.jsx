@@ -16,7 +16,9 @@ function CartList({ cartList, onDeleteFromCart }) {
           callback={() => onDeleteFromCart(item.code)}
           buttonName="Удалить"
         >
-          <div>{formatCurrency(item.price)}</div>
+          <div style={{ marginRight: "30px" }}>
+            {formatCurrency(item.price)}
+          </div>
           <div>{item.count} шт.</div>
         </Item>
       ))}
