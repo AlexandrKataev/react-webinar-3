@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-
 import "./style.css";
-import { plural } from "../../utils";
+
+import { formatCurrency, plural } from "../../utils";
 
 function Controls({ onOpenCart, cartItemCount, totalPrice }) {
   return (
@@ -19,8 +19,7 @@ function Controls({ onOpenCart, cartItemCount, totalPrice }) {
                 many: "товаров",
               }) +
               " / " +
-              totalPrice +
-              " ₽"}
+              formatCurrency(totalPrice)}
           </b>
         ) : (
           <b> пусто</b>

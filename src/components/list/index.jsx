@@ -1,31 +1,13 @@
 import React from "react";
-import PropTypes from 'prop-types';
-import Item from "../item";
-import './style.css';
+import PropTypes from "prop-types";
+import "./style.css";
 
-function List({list, onAddToCart}) {
-  return (
-    <div className='List'>{
-      list.map(item =>
-        <div key={item.code} className='List-item'>
-          <Item item={item} onAddToCart={onAddToCart} />
-        </div>
-      )}
-    </div>
-  )
+function List({ children }) {
+  return <div className="List">{children}</div>;
 }
 
 List.propTypes = {
-  list: PropTypes.arrayOf(PropTypes.shape({
-    code: PropTypes.number
-  })).isRequired,
-  onAddToCart: PropTypes.func,
-  
+  children: PropTypes.node,
 };
-
-List.defaultProps = {
-  onAddToCart: () => {
-  },
-}
 
 export default React.memo(List);
