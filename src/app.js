@@ -1,41 +1,47 @@
-import React, {useCallback} from 'react';
+import React, { useCallback, useState } from 'react';
 import List from "./components/list";
 import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
+import Cart from './components/cart';
 
 /**
  * Приложение
  * @param store {Store} Хранилище состояния приложения
  * @returns {React.ReactElement}
  */
-function App({store}) {
+function App({ store }) {
 
-  const list = store.getState().list;
+	const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const callbacks = {
-    onDeleteItem: useCallback((code) => {
-      store.deleteItem(code);
-    }, [store]),
+	const list = store.getState().list;
+	const cartList = store.getState().cartList;
+	const cartItemCount = cartList.length;
+	const totalPrice = store.getTotalPrice();
 
-    onSelectItem: useCallback((code) => {
-      store.selectItem(code);
-    }, [store]),
+	const callbacks = {
+		onOpenCart: useCallback(() => {
+			setIsCartOpen(true)
+		}, []),
+		onCloseCart: useCallback(() => {
+			setIsCartOpen(false)
+		}, []),
+		onAddToCart: useCallback((item) => {
+			store.addToCart(item)
+		}, []),
+		onDeleteFromCart: useCallback((code) => {
+			store.deleteFromCart(code)
+		}, [])
+	}
 
-    onAddItem: useCallback(() => {
-      store.addItem();
-    }, [store])
-  }
-
-  return (
-    <PageLayout>
-      <Head title='Приложение на чистом JS'/>
-      <Controls onAdd={callbacks.onAddItem}/>
-      <List list={list}
-            onDeleteItem={callbacks.onDeleteItem}
-            onSelectItem={callbacks.onSelectItem}/>
-    </PageLayout>
-  );
+	return (
+		<PageLayout>
+			<Head title='Приложение на чистом JS' />
+			<Controls onOpenCart={callbacks.onOpenCart} cartItemCount={cartItemCount} totalPrice={totalPrice}/>
+			<List list={list} onAddToCart={callbacks.onAddToCart}/>
+			{isCartOpen && <Cart onCloseCart={callbacks.onCloseCart} onDeleteFromCart={callbacks.onDeleteFromCart} cartList={cartList} totalPrice={totalPrice}/>}
+		</PageLayout>
+	);
 }
 
 export default App;

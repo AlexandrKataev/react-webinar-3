@@ -1,17 +1,14 @@
-.Item {
+.CartItem {
+	background: #ffffff;
   display: flex;
 	align-items: center;
   gap: 20px;
   transition: background-color 1s;
 	padding: 20px;
+	border-bottom: 1px dashed #ccc;
 }
 
-.Item_selected {
-  background: #75aaf1;
-  color: #fff;
-}
-
-.Item-actions {
+.CartItem-actions {
 	display: flex;
 	align-items: center;
 	gap: 20px;
