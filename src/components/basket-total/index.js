@@ -19,10 +19,12 @@ function BasketTotal({ sum, language }) {
 
 BasketTotal.propTypes = {
   sum: PropTypes.number,
+  language: PropTypes.string,
 };
 
 BasketTotal.defaultProps = {
   sum: 0,
+  language: "ru",
 };
 
 export default memo(BasketTotal);

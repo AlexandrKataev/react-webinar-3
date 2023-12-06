@@ -19,6 +19,8 @@ function LanguageSelector({ setLanguage, currentLanguage }) {
 
 LanguageSelector.propTypes = {
   title: PropTypes.node,
+  currentLanguage: PropTypes.string,
+  setLanguage: PropTypes.func,
 };
 
 export default memo(LanguageSelector);

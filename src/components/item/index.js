@@ -34,10 +34,12 @@ Item.propTypes = {
     price: PropTypes.number,
   }).isRequired,
   onAdd: PropTypes.func,
+  language: PropTypes.string,
 };
 
 Item.defaultProps = {
   onAdd: () => {},
+  language: "ru",
 };
 
 export default memo(Item);

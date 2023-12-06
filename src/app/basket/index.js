@@ -34,6 +34,7 @@ function Basket() {
             item={item}
             onRemove={callbacks.removeFromBasket}
             closeBasket={callbacks.closeModal}
+            language={select.language}
           />
         );
       },

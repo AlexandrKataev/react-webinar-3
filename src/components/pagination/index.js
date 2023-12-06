@@ -52,11 +52,14 @@ function Pagination({ totalPages, currentPage, setPage }) {
 }
 
 Pagination.propTypes = {
-  onAdd: PropTypes.func,
+  totalPages: PropTypes.number,
+  currentPage: PropTypes.number,
+  setPage: PropTypes.func,
 };
 
 Pagination.defaultProps = {
-  onAdd: () => {},
+  totalPages: 1,
+  currentPage: 1,
 };
 
 export default memo(Pagination);

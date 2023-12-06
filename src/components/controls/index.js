@@ -14,10 +14,12 @@ function Controls({ onAdd, language }) {
 
 Controls.propTypes = {
   onAdd: PropTypes.func,
+  language: PropTypes.string,
 };
 
 Controls.defaultProps = {
   onAdd: () => {},
+  language: "ru",
 };
 
 export default memo(Controls);

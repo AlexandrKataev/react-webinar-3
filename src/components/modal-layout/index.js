@@ -47,11 +47,13 @@ ModalLayout.propTypes = {
   title: PropTypes.string,
   onClose: PropTypes.func,
   children: PropTypes.node,
+  language: PropTypes.string,
 };
 
 ModalLayout.defaultProps = {
   title: "Модалка",
   onClose: () => {},
+  language: "ru",
 };
 
 export default memo(ModalLayout);

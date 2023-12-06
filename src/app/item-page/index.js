@@ -1,30 +1,18 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
 import BasketTool from "../../components/basket-tool";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
-import { useParams } from "react-router-dom";
+
 import "./style.css";
 import { numberFormat } from "../../utils";
+import { useFetchItemData } from "./api/useFetchItemData";
+import { useParams } from "react-router";
 
 function ItemPage() {
   const store = useStore();
   const { itemId } = useParams();
-  const language = useSelector((state) => state.language.value);
-
-  const [itemData, setItemData] = useState(null);
-
-  useEffect(() => {
-    const fetchItems = async () => {
-      const fetchItemData = await fetch(
-        `/api/v1/articles/${itemId}?fields=*,madeIn(title,code),category(title)&lang=${language}`
-      );
-      const data = await fetchItemData.json();
-      setItemData(data.result);
-    };
-    fetchItems();
-  }, [itemId, language]);
 
   const select = useSelector((state) => ({
     list: state.catalog.list,
@@ -32,6 +20,8 @@ function ItemPage() {
     sum: state.basket.sum,
     language: state.language.value,
   }));
+
+  const itemData = useFetchItemData({ itemId, language: select.language });
 
   const callbacks = {
     // Добавление в корзину
@@ -100,4 +90,4 @@ function ItemPage() {
   );
 }
 
-export default memo(ItemPage);
+export default ItemPage;
