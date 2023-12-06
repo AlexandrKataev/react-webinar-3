@@ -1,13 +1,18 @@
-import {memo} from "react";
+import { memo } from "react";
 import PropTypes from "prop-types";
-import './style.css';
+import "./style.css";
+import LanguageSelector from "../language-selector";
 
-function Head({title}) {
+function Head({ title, setLanguage, currentLanguage }) {
   return (
-    <div className='Head'>
+    <div className="Head">
       <h1>{title}</h1>
+      <LanguageSelector
+        setLanguage={setLanguage}
+        currentLanguage={currentLanguage}
+      />
     </div>
-  )
+  );
 }
 
 Head.propTypes = {

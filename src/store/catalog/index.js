@@ -16,14 +16,13 @@ class Catalog extends StoreModule {
     };
   }
 
-  async load() {
+  async load(language) {
     const response = await fetch(
       `/api/v1/articles?limit=${this.getState().limit}&skip=${
         this.getState().currentPage * 10 - 9
-      }&fields=items(_id, title, price),count`
+      }&fields=items(_id, title, price),count&lang=${language}`
     );
     const json = await response.json();
-    console.log(response.headers.get("Content-Length"));
     this.setState(
       {
         ...this.getState(),

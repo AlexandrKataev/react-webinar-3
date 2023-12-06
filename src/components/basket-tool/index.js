@@ -5,24 +5,30 @@ import { numberFormat, plural } from "../../utils";
 import "./style.css";
 import { Link } from "react-router-dom";
 
-function BasketTool({ sum, amount, onOpen }) {
+function BasketTool({ sum, amount, onOpen, language }) {
   const cn = bem("BasketTool");
   return (
     <div className={cn()}>
       <Link className={cn("home")} to="/">
-        Главная
+        {language === "ru" ? "Главная" : "Home"}
       </Link>
-      <span className={cn("label")}>В корзине:</span>
+      <span className={cn("label")}>
+        {language === "ru" ? "В корзине: " : "Cart: "}
+      </span>
       <span className={cn("total")}>
         {amount
           ? `${amount} ${plural(amount, {
-              one: "товар",
-              few: "товара",
-              many: "товаров",
+              one: language === "ru" ? "товар" : "item",
+              few: language === "ru" ? "товара" : "items",
+              many: language === "ru" ? "товаров" : "items",
             })} / ${numberFormat(sum)} ₽`
-          : `пусто`}
+          : language === "ru"
+          ? `пусто`
+          : "empty"}
       </span>
-      <button onClick={onOpen}>Перейти</button>
+      <button onClick={onOpen}>
+        {language === "ru" ? "Перейти" : "To cart"}
+      </button>
     </div>
   );
 }

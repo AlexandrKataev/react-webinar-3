@@ -10,39 +10,27 @@ import { numberFormat } from "../../utils";
 
 function ItemPage() {
   const store = useStore();
-
   const { itemId } = useParams();
+  const language = useSelector((state) => state.language.value);
 
   const [itemData, setItemData] = useState(null);
 
   useEffect(() => {
     const fetchItems = async () => {
-      const fetchItemData = await fetch(`/api/v1/articles/${itemId}`);
+      const fetchItemData = await fetch(
+        `/api/v1/articles/${itemId}?fields=*,madeIn(title,code),category(title)&lang=${language}`
+      );
       const data = await fetchItemData.json();
-
-      const fetchCategory = await fetch(
-        `/api/v1/categories/${data.result.category._id}`
-      );
-      const category = await fetchCategory.json();
-
-      const fetchCountry = await fetch(
-        `/api/v1/countries/${data.result.madeIn._id}`
-      );
-      const country = await fetchCountry.json();
-
-      setItemData({
-        ...data.result,
-        category: category.result.title,
-        madeIn: country.result.title,
-      });
+      setItemData(data.result);
     };
     fetchItems();
-  }, [itemId]);
+  }, [itemId, language]);
 
   const select = useSelector((state) => ({
     list: state.catalog.list,
     amount: state.basket.amount,
     sum: state.basket.sum,
+    language: state.language.value,
   }));
 
   const callbacks = {
@@ -56,35 +44,55 @@ function ItemPage() {
       () => store.actions.modals.open("basket"),
       [store]
     ),
+    // Сменить язык
+    setLanguage: useCallback((language) =>
+      store.actions.language.setLanguage(language)
+    ),
   };
 
   return (
     <PageLayout>
-      <Head title={itemData?.title || ""} />
+      <Head
+        title={itemData?.title || ""}
+        setLanguage={callbacks.setLanguage}
+        currentLanguage={select.language}
+      />
       <BasketTool
         onOpen={callbacks.openModalBasket}
         amount={select.amount}
         sum={select.sum}
+        language={select.language}
       />
       {itemData && (
         <div className="ItemPage-body">
-          <div>{itemData.description}</div>
+          <div>{itemData?.description}</div>
           <div>
-            <span>Страна производитель: </span> <b>{itemData.madeIn}</b>
+            <span>
+              {select.language === "ru"
+                ? "Cтрана производитель: "
+                : "Made in: "}
+            </span>
+            <b>{itemData?.madeIn.title}</b>
           </div>
           <div>
-            <span>Категория: </span>
-            <b>{itemData.category}</b>
+            <span>
+              {select.language === "ru" ? "Категория: " : "Category: "}
+            </span>
+            <b>{itemData?.category.title}</b>
           </div>
           <div>
-            <span>Год выпуска: </span>
-            <b>{itemData.edition}</b>
+            <span>
+              {select.language === "ru" ? "Год выпуска: " : "Edition year: "}
+            </span>
+            <b>{itemData?.edition}</b>
           </div>
           <div className="ItemPage-body-price">
-            {"Цена: " + numberFormat(itemData.price) + " ₽"}
+            {(select.language === "ru" ? "Цена: " : "Price: ") +
+              numberFormat(itemData?.price) +
+              " ₽"}
           </div>
           <button onClick={() => callbacks.addToBasket(itemId)}>
-            Добавить
+            {select.language === "ru" ? "Добавить" : "Add"}
           </button>
         </div>
       )}

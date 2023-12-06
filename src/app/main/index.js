@@ -17,11 +17,12 @@ function Main() {
     sum: state.basket.sum,
     currentPage: state.catalog.currentPage,
     totalPages: state.catalog.totalPages,
+    language: state.language.value,
   }));
 
   useEffect(() => {
-    store.actions.catalog.load();
-  }, [select.totalPages, select.currentPage]);
+    store.actions.catalog.load(select.language);
+  }, [select.totalPages, select.currentPage, select.language]);
 
   const callbacks = {
     // Добавление в корзину
@@ -35,25 +36,44 @@ function Main() {
       [store]
     ),
     // Перейти на страницу
-    setPage: useCallback((number) => store.actions.catalog.setPage(number)),
+    setPage: useCallback(
+      (number) => store.actions.catalog.setPage(number),
+      [store]
+    ),
+    // Сменить язык
+    setLanguage: useCallback(
+      (language) => store.actions.language.setLanguage(language),
+      [store]
+    ),
   };
 
   const renders = {
     item: useCallback(
       (item) => {
-        return <Item item={item} onAdd={callbacks.addToBasket} />;
+        return (
+          <Item
+            item={item}
+            onAdd={callbacks.addToBasket}
+            language={select.language}
+          />
+        );
       },
-      [callbacks.addToBasket]
+      [callbacks.addToBasket, select.language]
     ),
   };
 
   return (
     <PageLayout>
-      <Head title="Магазин" />
+      <Head
+        title={select.language === "ru" ? "Магазин" : "Shop"}
+        setLanguage={callbacks.setLanguage}
+        currentLanguage={select.language}
+      />
       <BasketTool
         onOpen={callbacks.openModalBasket}
         amount={select.amount}
         sum={select.sum}
+        language={select.language}
       />
       <List list={select.list} renderItem={renders.item} />
       <Pagination
