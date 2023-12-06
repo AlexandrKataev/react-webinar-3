@@ -23,12 +23,14 @@ function ItemBasket(props) {
       >
         {props.item.title}
       </Link>
-      <div className={cn("cell")}>{numberFormat(props.item.price)} ₽</div>
-      <div className={cn("cell")}>
-        {numberFormat(props.item.amount || 0)} шт
-      </div>
-      <div className={cn("cell")}>
-        <button onClick={callbacks.onRemove}>Удалить</button>
+      <div className={cn("right")}>
+        <div className={cn("cell")}>{numberFormat(props.item.price)} ₽</div>
+        <div className={cn("cell")}>
+          {numberFormat(props.item.amount || 0)} шт
+        </div>
+        <div className={cn("cell")}>
+          <button onClick={callbacks.onRemove}>Удалить</button>
+        </div>
       </div>
     </div>
   );
