@@ -72,7 +72,7 @@ function ItemPage() {
                 ? "Cтрана производитель: "
                 : "Made in: "}
             </span>
-            <b>{itemData?.madeIn.title}</b>
+            <b>{itemData?.madeIn.title + " " + `(${itemData?.madeIn.code})`}</b>
           </div>
           <div>
             <span>
