@@ -11,11 +11,16 @@ function ItemBasket(props) {
 
   const callbacks = {
     onRemove: (e) => props.onRemove(props.item._id),
+    closeBasket: () => props.closeBasket(),
   };
 
   return (
     <div className={cn()}>
-      <Link className={cn("title")} to={`/item/${props.item._id}`} onClick={}	>
+      <Link
+        className={cn("title")}
+        to={`/item/${props.item._id}`}
+        onClick={callbacks.closeBasket}
+      >
         {props.item.title}
       </Link>
       <div className={cn("cell")}>{numberFormat(props.item.price)} ₽</div>
