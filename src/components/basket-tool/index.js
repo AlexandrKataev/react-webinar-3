@@ -5,30 +5,56 @@ import { numberFormat, plural } from "../../utils";
 import "./style.css";
 import { Link } from "react-router-dom";
 
+const homeTitle = {
+  ru: "Главная",
+  en: "Home",
+};
+
+const cartTitle = {
+  ru: "В корзине: ",
+  en: "Cart: ",
+};
+
+const itemTitles = {
+  one: {
+    ru: "товар",
+    en: "item",
+  },
+  few: { ru: "товара", en: "items" },
+  many: {
+    ru: "товаров",
+    en: "items",
+  },
+};
+
+const emptyTitle = {
+  ru: "пусто",
+  en: "empty",
+};
+
+const toCartTitle = {
+  ru: "Перейти",
+  en: "To cart",
+};
+
 function BasketTool({ sum, amount, onOpen, language }) {
   const cn = bem("BasketTool");
   return (
     <div className={cn()}>
       <Link className={cn("home")} to="/">
-        {language === "ru" ? "Главная" : "Home"}
+        {homeTitle[language]}
       </Link>
-      <span className={cn("label")}>
-        {language === "ru" ? "В корзине: " : "Cart: "}
-      </span>
+      <span className={cn("label")}>{cartTitle[language]}</span>
       <span className={cn("total")}>
         {amount
           ? `${amount} ${plural(amount, {
-              one: language === "ru" ? "товар" : "item",
-              few: language === "ru" ? "товара" : "items",
-              many: language === "ru" ? "товаров" : "items",
+              one: itemTitles.one[language],
+              few: itemTitles.few[language],
+              many: itemTitles.many[language],
             })} / ${numberFormat(sum)} ₽`
-          : language === "ru"
-          ? `пусто`
-          : "empty"}
+          : emptyTitle[language]}
       </span>
-      <button onClick={onOpen}>
-        {language === "ru" ? "Перейти" : "To cart"}
-      </button>
+      <button onClick={onOpen}>{toCartTitle[language]}</button>
     </div>
   );
 }

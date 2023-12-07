@@ -1,10 +1,15 @@
-import { memo, useCallback } from "react";
+import { memo, useCallback, useEffect } from "react";
 import ItemBasket from "../../components/item-basket";
 import List from "../../components/list";
 import ModalLayout from "../../components/modal-layout";
 import BasketTotal from "../../components/basket-total";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
+
+const cartTitle = {
+  ru: "Корзина",
+  en: "Cart",
+};
 
 function Basket() {
   const store = useStore();
@@ -15,6 +20,10 @@ function Basket() {
     sum: state.basket.sum,
     language: state.language.value,
   }));
+
+  useEffect(() => {
+    store.actions.basket.load(select.language);
+  }, [select.language]);
 
   const callbacks = {
     // Удаление из корзины
@@ -44,7 +53,7 @@ function Basket() {
 
   return (
     <ModalLayout
-      title={select.language === "ru" ? "Корзина" : "Cart"}
+      title={cartTitle[select.language]}
       onClose={callbacks.closeModal}
       language={select.language}
     >

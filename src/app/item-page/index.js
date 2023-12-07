@@ -10,6 +10,31 @@ import { numberFormat } from "../../utils";
 import { useFetchItemData } from "./api/useFetchItemData";
 import { useParams } from "react-router";
 
+const madeInTitle = {
+  ru: "Cтрана производитель: ",
+  en: "Made in: ",
+};
+
+const categoryTitle = {
+  ru: "Категория: ",
+  en: "Category: ",
+};
+
+const editionTitle = {
+  ru: "Год выпуска: ",
+  en: "Edition: ",
+};
+
+const priceTitle = {
+  ru: "Цена: ",
+  en: "Price: ",
+};
+
+const addTitle = {
+  ru: "Добавить",
+  en: "Add",
+};
+
 function ItemPage() {
   const store = useStore();
   const { itemId } = useParams();
@@ -57,32 +82,22 @@ function ItemPage() {
         <div className="ItemPage-body">
           <div>{itemData?.description}</div>
           <div>
-            <span>
-              {select.language === "ru"
-                ? "Cтрана производитель: "
-                : "Made in: "}
-            </span>
+            <span>{madeInTitle[select.language]}</span>
             <b>{itemData?.madeIn.title + " " + `(${itemData?.madeIn.code})`}</b>
           </div>
           <div>
-            <span>
-              {select.language === "ru" ? "Категория: " : "Category: "}
-            </span>
+            <span>{categoryTitle[select.language]}</span>
             <b>{itemData?.category.title}</b>
           </div>
           <div>
-            <span>
-              {select.language === "ru" ? "Год выпуска: " : "Edition year: "}
-            </span>
+            <span>{editionTitle[select.language]}</span>
             <b>{itemData?.edition}</b>
           </div>
           <div className="ItemPage-body-price">
-            {(select.language === "ru" ? "Цена: " : "Price: ") +
-              numberFormat(itemData?.price) +
-              " ₽"}
+            {priceTitle[select.language] + numberFormat(itemData?.price) + " ₽"}
           </div>
           <button onClick={() => callbacks.addToBasket(itemId)}>
-            {select.language === "ru" ? "Добавить" : "Add"}
+            {addTitle[select.language]}
           </button>
         </div>
       )}

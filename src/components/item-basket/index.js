@@ -6,6 +6,16 @@ import PropTypes from "prop-types";
 import "./style.css";
 import { Link } from "react-router-dom";
 
+const pcsTitle = {
+  ru: "шт",
+  en: "pcs",
+};
+
+const deleteTitle = {
+  ru: "Удалить",
+  en: "Delete",
+};
+
 function ItemBasket(props) {
   const cn = bem("ItemBasket");
 
@@ -26,12 +36,11 @@ function ItemBasket(props) {
       <div className={cn("right")}>
         <div className={cn("cell")}>{numberFormat(props.item.price)} ₽</div>
         <div className={cn("cell")}>
-          {numberFormat(props.item.amount || 0)}{" "}
-          {props.language === "ru" ? "шт" : "pcs"}
+          {numberFormat(props.item.amount || 0)} {pcsTitle[props.language]}
         </div>
         <div className={cn("cell")}>
           <button onClick={callbacks.onRemove}>
-            {props.language === "ru" ? "Удалить" : "Delete"}
+            {deleteTitle[props.language]}
           </button>
         </div>
       </div>

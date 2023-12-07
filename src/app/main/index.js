@@ -8,6 +8,11 @@ import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import Pagination from "../../components/pagination";
 
+const shopTitle = {
+  ru: "Магазин",
+  en: "Shop",
+};
+
 function Main() {
   const store = useStore();
 
@@ -65,7 +70,7 @@ function Main() {
   return (
     <PageLayout>
       <Head
-        title={select.language === "ru" ? "Магазин" : "Shop"}
+        title={shopTitle[select.language]}
         setLanguage={callbacks.setLanguage}
         currentLanguage={select.language}
       />
@@ -76,11 +81,13 @@ function Main() {
         language={select.language}
       />
       <List list={select.list} renderItem={renders.item} />
-      <Pagination
-        totalPages={select.totalPages}
-        currentPage={select.currentPage}
-        setPage={callbacks.setPage}
-      />
+      {select.list.length > 0 && (
+        <Pagination
+          totalPages={select.totalPages}
+          currentPage={select.currentPage}
+          setPage={callbacks.setPage}
+        />
+      )}
     </PageLayout>
   );
 }

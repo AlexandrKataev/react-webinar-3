@@ -5,6 +5,11 @@ import { numberFormat } from "../../utils";
 import "./style.css";
 import { Link } from "react-router-dom";
 
+const addTitle = {
+  ru: "Добавить",
+  en: "Add",
+};
+
 function Item(props) {
   const cn = bem("Item");
 
@@ -19,9 +24,7 @@ function Item(props) {
       </Link>
       <div className={cn("actions")}>
         <div className={cn("price")}>{numberFormat(props.item.price)} ₽</div>
-        <button onClick={callbacks.onAdd}>
-          {props.language === "ru" ? "Добавить" : "Add"}
-        </button>
+        <button onClick={callbacks.onAdd}>{addTitle[props.language]}</button>
       </div>
     </div>
   );

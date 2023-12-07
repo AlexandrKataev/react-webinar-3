@@ -4,13 +4,16 @@ import { cn as bem } from "@bem-react/classname";
 import { numberFormat } from "../../utils";
 import "./style.css";
 
+const totalTitle = {
+  ru: "Итого",
+  en: "Total",
+};
+
 function BasketTotal({ sum, language }) {
   const cn = bem("BasketTotal");
   return (
     <div className={cn()}>
-      <span className={cn("cell")}>
-        {language === "ru" ? "Итого" : "Total"}
-      </span>
+      <span className={cn("cell")}>{totalTitle[language]}</span>
       <span className={cn("cell")}> {numberFormat(sum)} ₽</span>
       <span className={cn("cell")}></span>
     </div>
