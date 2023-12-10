@@ -11,8 +11,8 @@
   border: none;
   background-color: #0088e900;
   cursor: pointer;
-  padding: 3px 7px;
-  min-width: 30px;
+  padding: 1px 4px;
+  min-width: 20px;
   &:hover {
     background-color: #e1e1e1;
   }
@@ -23,8 +23,8 @@
   border: none;
   background-color: #0088e900;
   cursor: pointer;
-  padding: 3px 7px;
-  min-width: 30px;
+  padding: 1px 4px;
+  min-width: 20px;
   color: white;
   background-color: #0087e9;
 }
@@ -34,6 +34,6 @@
   border: none;
   background-color: #0088e900;
   cursor: pointer;
-  padding: 3px 7px;
-  min-width: 30px;
+  padding: 1px 4px;
+  min-width: 20px;
 }

@@ -5,6 +5,7 @@ import ModalLayout from "../../components/modal-layout";
 import BasketTotal from "../../components/basket-total";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
+import { useNavigate } from "react-router-dom";
 
 const cartTitle = {
   ru: "Корзина",
@@ -13,6 +14,8 @@ const cartTitle = {
 
 function Basket() {
   const store = useStore();
+
+  const navigate = useNavigate();
 
   const select = useSelector((state) => ({
     list: state.basket.list,
@@ -33,6 +36,7 @@ function Basket() {
     ),
     // Закрытие любой модалки
     closeModal: useCallback(() => store.actions.modals.close(), [store]),
+    onOpen: useCallback((itemId) => navigate(`/item/${itemId}`)),
   };
 
   const renders = {
@@ -41,8 +45,9 @@ function Basket() {
         return (
           <ItemBasket
             item={item}
-            onRemove={callbacks.removeFromBasket}
+            onRemove={() => callbacks.removeFromBasket(item._id)}
             closeBasket={callbacks.closeModal}
+            onOpen={() => callbacks.onOpen(item._id)}
             language={select.language}
           />
         );

@@ -20,19 +20,19 @@ function ItemBasket(props) {
   const cn = bem("ItemBasket");
 
   const callbacks = {
-    onRemove: (e) => props.onRemove(props.item._id),
+    onRemove: () => props.onRemove(),
+    onOpenItem: () => {
+      props.onOpen();
+      props.closeBasket();
+    },
     closeBasket: () => props.closeBasket(),
   };
 
   return (
     <div className={cn()}>
-      <Link
-        className={cn("title")}
-        to={`/item/${props.item._id}`}
-        onClick={callbacks.closeBasket}
-      >
+      <div className={cn("title")} onClick={callbacks.onOpenItem}>
         {props.item.title}
-      </Link>
+      </div>
       <div className={cn("right")}>
         <div className={cn("cell")}>{numberFormat(props.item.price)} ₽</div>
         <div className={cn("cell")}>

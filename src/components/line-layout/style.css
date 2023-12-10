@@ -1,0 +1,4 @@
+.LineLayout {
+  display: flex;
+  justify-content: space-between;
+}

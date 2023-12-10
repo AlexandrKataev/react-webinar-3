@@ -13,10 +13,19 @@ class Catalog extends StoreModule {
       limit: 10,
       totalPages: 1,
       currentPage: 1,
+      status: "pending",
     };
   }
 
   async load(language) {
+    this.setState(
+      {
+        ...this.getState(),
+        status: "pending",
+      },
+      "Загружены товары из АПИ"
+    );
+
     const response = await fetch(
       `/api/v1/articles?limit=${this.getState().limit}&skip=${
         this.getState().currentPage * 10 - 10
@@ -28,6 +37,7 @@ class Catalog extends StoreModule {
         ...this.getState(),
         list: json.result.items,
         totalPages: Math.ceil(json.result.count / this.getState().limit),
+        status: "fullfilled",
       },
       "Загружены товары из АПИ"
     );

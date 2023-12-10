@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { cn as bem } from "@bem-react/classname";
 import { numberFormat } from "../../utils";
 import "./style.css";
-import { Link } from "react-router-dom";
 
 const addTitle = {
   ru: "Добавить",
@@ -14,14 +13,15 @@ function Item(props) {
   const cn = bem("Item");
 
   const callbacks = {
-    onAdd: (e) => props.onAdd(props.item._id),
+    onAdd: () => props.onAdd(),
+    onOpen: () => props.onOpen(),
   };
 
   return (
     <div className={cn()}>
-      <Link className={cn("title")} to={`/item/${props.item._id}`}>
+      <div className={cn("title")} onClick={callbacks.onOpen}>
         {props.item.title}
-      </Link>
+      </div>
       <div className={cn("actions")}>
         <div className={cn("price")}>{numberFormat(props.item.price)} ₽</div>
         <button onClick={callbacks.onAdd}>{addTitle[props.language]}</button>
@@ -42,6 +42,7 @@ Item.propTypes = {
 
 Item.defaultProps = {
   onAdd: () => {},
+  onOpen: () => {},
   language: "ru",
 };
 

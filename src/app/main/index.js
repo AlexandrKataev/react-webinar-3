@@ -7,6 +7,10 @@ import List from "../../components/list";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
 import Pagination from "../../components/pagination";
+import Navbar from "../../components/navbar";
+import LineLayout from "../../components/line-layout";
+import Loader from "../../components/loader";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const shopTitle = {
   ru: "Магазин",
@@ -15,6 +19,7 @@ const shopTitle = {
 
 function Main() {
   const store = useStore();
+  const navigate = useNavigate();
 
   const select = useSelector((state) => ({
     list: state.catalog.list,
@@ -23,6 +28,7 @@ function Main() {
     currentPage: state.catalog.currentPage,
     totalPages: state.catalog.totalPages,
     language: state.language.value,
+    status: state.catalog.status,
   }));
 
   useEffect(() => {
@@ -41,13 +47,16 @@ function Main() {
       [store]
     ),
     // Перейти на страницу
-    setPage: useCallback(
-      (number) => store.actions.catalog.setPage(number),
-      [store]
-    ),
+    setPage: useCallback((number) => {
+      store.actions.catalog.setPage(number);
+    }),
     // Сменить язык
     setLanguage: useCallback(
       (language) => store.actions.language.setLanguage(language),
+      [store]
+    ),
+    onOpenItemPage: useCallback(
+      (itemId) => navigate(`/item/${itemId}`),
       [store]
     ),
   };
@@ -58,7 +67,8 @@ function Main() {
         return (
           <Item
             item={item}
-            onAdd={callbacks.addToBasket}
+            onAdd={() => callbacks.addToBasket(item._id)}
+            onOpen={() => callbacks.onOpenItemPage(item._id)}
             language={select.language}
           />
         );
@@ -74,13 +84,18 @@ function Main() {
         setLanguage={callbacks.setLanguage}
         currentLanguage={select.language}
       />
-      <BasketTool
-        onOpen={callbacks.openModalBasket}
-        amount={select.amount}
-        sum={select.sum}
-        language={select.language}
-      />
+      <LineLayout>
+        <Navbar language={select.language} />
+        <BasketTool
+          onOpen={callbacks.openModalBasket}
+          amount={select.amount}
+          sum={select.sum}
+          language={select.language}
+        />
+      </LineLayout>
+
       <List list={select.list} renderItem={renders.item} />
+
       {select.list.length > 0 && (
         <Pagination
           totalPages={select.totalPages}
@@ -88,6 +103,7 @@ function Main() {
           setPage={callbacks.setPage}
         />
       )}
+      {select.status === "pending" && <Loader />}
     </PageLayout>
   );
 }
