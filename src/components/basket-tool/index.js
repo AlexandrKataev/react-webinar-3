@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import { cn as bem } from "@bem-react/classname";
 import { numberFormat, plural } from "../../utils";
 import "./style.css";
-import { Link } from "react-router-dom";
-import Navbar from "../navbar";
 
 const cartTitle = {
   ru: "В корзине: ",
@@ -37,7 +35,6 @@ function BasketTool({ sum, amount, onOpen, language }) {
   const cn = bem("BasketTool");
   return (
     <div className={cn()}>
-      {/* <Navbar language={language} className={cn("navbar")} /> */}
       <span className={cn("label")}>{cartTitle[language]}</span>
       <span className={cn("total")}>
         {amount

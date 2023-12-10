@@ -10,7 +10,7 @@ import Pagination from "../../components/pagination";
 import Navbar from "../../components/navbar";
 import LineLayout from "../../components/line-layout";
 import Loader from "../../components/loader";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const shopTitle = {
   ru: "Магазин",

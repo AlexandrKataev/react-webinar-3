@@ -4,7 +4,6 @@ import { numberFormat } from "../../utils";
 import { cn as bem } from "@bem-react/classname";
 import PropTypes from "prop-types";
 import "./style.css";
-import { Link } from "react-router-dom";
 
 const pcsTitle = {
   ru: "шт",
