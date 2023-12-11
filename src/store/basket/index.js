@@ -12,7 +12,7 @@ class Basket extends StoreModule {
   //Загрузка товаров в корзину
   async load(language) {
     const response = await fetch(
-      `/api/v1/articles?limit=10000&lang=${language}&search[ids]=${this.getState().list.reduce(
+      `/api/v1/articles?limit=*&lang=${language}&search[ids]=${this.getState().list.reduce(
         (str, el) => {
           return str + "|" + el._id;
         },

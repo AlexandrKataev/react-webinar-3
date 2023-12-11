@@ -13,7 +13,9 @@ const homeTitle = {
 function Navbar({ language }) {
   return (
     <div className="Navbar">
-      <Link to="/">{homeTitle[language]}</Link>
+      <Link to="/" className="Navbar-link">
+        {homeTitle[language]}
+      </Link>
     </div>
   );
 }

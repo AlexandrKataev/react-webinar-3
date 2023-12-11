@@ -3,3 +3,7 @@
   display: inline-flex;
   padding: 20px;
 }
+
+.Navbar-link {
+  color: #0087e9;
+}
