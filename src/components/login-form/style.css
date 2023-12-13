@@ -1,0 +1,30 @@
+.LoginForm {
+  /* display: flex;
+  flex-direction: column; */
+  padding: 20px;
+}
+
+.LoginForm-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 20px 0;
+}
+
+.LoginForm-password {
+  margin-top: 20px;
+}
+
+.LoginForm-button {
+  margin-top: 20px;
+}
+
+.LoginForm-input {
+  font-size: 16px;
+  height: 26px;
+  width: 203px;
+}
+
+.LoginForm-error {
+  color: #ff0000;
+  margin-top: 20px;
+}
