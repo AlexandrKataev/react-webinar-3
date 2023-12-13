@@ -4,7 +4,7 @@ import { cn as bem } from "@bem-react/classname";
 
 import "./style.css";
 
-function UserCard({ user, onAdd, t }) {
+function UserCard({ user }) {
   const cn = bem("UserCard");
   return (
     <div className={cn()}>
@@ -26,14 +26,6 @@ function UserCard({ user, onAdd, t }) {
 }
 
 UserCard.propTypes = {
-  // user: PropTypes.shape({
-  //   _id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  //   description: PropTypes.string,
-  //   madeIn: PropTypes.object,
-  //   category: PropTypes.object,
-  //   edition: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  //   price: PropTypes.number
-  // }).isRequired,
   onAdd: PropTypes.func,
   t: PropTypes.func,
 };

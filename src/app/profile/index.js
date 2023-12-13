@@ -14,9 +14,6 @@ import Header from "../../containers/header";
 import Spinner from "../../components/spinner";
 import { useNavigate } from "react-router";
 
-/**
- * Страница товара с первичной загрузкой товара по id из url адреса
- */
 function Profile() {
   const store = useStore();
   const navigate = useNavigate();

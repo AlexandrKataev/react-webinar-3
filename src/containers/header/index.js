@@ -6,9 +6,6 @@ import useTranslate from "../../hooks/use-translate";
 import HeaderBar from "../../components/header-bar";
 import { useNavigate } from "react-router";
 
-/**
- * Контейнер с компонентами навигации
- */
 function Header() {
   const store = useStore();
   const navigate = useNavigate();
@@ -18,9 +15,8 @@ function Header() {
   }));
 
   const callbacks = {
-    // Открытие модалки корзины
     onClickLogout: useCallback(() => store.actions.user.logout(), [store]),
-    // Обработка перехода на главную
+
     onClickLogin: useCallback(() => {
       navigate("/login");
     }, [store]),
