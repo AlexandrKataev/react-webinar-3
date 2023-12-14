@@ -11,9 +11,14 @@
   "basket.delete": "Удалить",
   "article.add": "Добавить",
   "filter.reset": "Сбросить",
+  "login.enter": "Войти",
+  "login.login": "Логин",
+  "login.title": "Вход",
+  "login.password": "Пароль",
+  "profile.title": "Профиль",
   "basket.articles": {
     "one": "товар",
-    "few": "товара",
+    "few": "товабра",
     "many": "товаров",
     "other": "товара"
   }

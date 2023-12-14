@@ -1,10 +1,10 @@
+import { deleteCookie, getCookie } from "../../utils";
 import StoreModule from "../module";
 
 class User extends StoreModule {
   initState() {
     return {
       data: null,
-      token: null,
       waiting: false,
       error: null,
     };
@@ -43,7 +43,6 @@ class User extends StoreModule {
           this.setState(
             {
               ...this.getState(),
-              token: data.result.token,
               data: data.result.user,
               error: null,
               waiting: false,
@@ -62,15 +61,12 @@ class User extends StoreModule {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "X-token": document.cookie.replace(
-          /(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/,
-          "$1"
-        ),
+        "X-token": getCookie("token"),
       },
 
       credentials: "include",
     }).finally(() => {
-      document.cookie = `token=;expires=${new Date(0)}`;
+      deleteCookie("token");
       this.setState(this.initState(), "Пользователь вышел");
     });
   }
@@ -88,10 +84,7 @@ class User extends StoreModule {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "X-token": document.cookie.replace(
-          /(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/,
-          "$1"
-        ),
+        "X-token": getCookie("token"),
       },
     })
       .then((res) => {
@@ -99,7 +92,7 @@ class User extends StoreModule {
       })
       .then((data) => {
         if (data.error) {
-          document.cookie = `token=;expires=${new Date(0)}`;
+          deleteCookie("token");
           this.setState(
             {
               ...this.getState(),

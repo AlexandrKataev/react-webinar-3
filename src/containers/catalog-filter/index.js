@@ -8,8 +8,6 @@ import SideLayout from "../../components/side-layout";
 import { getNested } from "../../utils";
 
 const getCategoryOptions = (items = []) => {
-  const nestedArray = getNested(items);
-  console.log(nestedArray);
   return getNested(items).map((el) => {
     return { title: el.title, value: el._id };
   });

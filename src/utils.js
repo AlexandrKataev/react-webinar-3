@@ -36,9 +36,8 @@ export function numberFormat(value, locale = "ru-RU", options = {}) {
 
 /**
  * Форматирование вложенного списка с префиксами
- * @param value {Number}
- * @param options {Object}
- * @returns {String}
+ * @param array {Array}
+ * @returns {Array}
  */
 export function getNested(array) {
   function buildTree(data) {
@@ -65,7 +64,7 @@ export function getNested(array) {
 
   function getNestedSelectOptions(tree, level = 0, result = []) {
     tree.forEach((item) => {
-      const prefix = "-".repeat(level);
+      const prefix = "- ".repeat(level);
       const newItem = { ...item, title: `${prefix}${item.title}` };
       result.push({ ...newItem, children: undefined });
 
@@ -78,4 +77,40 @@ export function getNested(array) {
   }
 
   return getNestedSelectOptions(tree);
+}
+
+/**
+ * Получить куки
+ * @param name {String}
+ * @returns {String}
+ */
+export function getCookie(name) {
+  let matches = document.cookie.match(
+    new RegExp(
+      "(?:^|; )" +
+        name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+        "=([^;]*)"
+    )
+  );
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+/**
+ * Удалить куки
+ * @param name {String}
+ * @returns {undefined}
+ */
+export function deleteCookie(name) {
+  document.cookie = `${name}=;expires=${new Date(0)}`;
+}
+
+/**
+ * Проверить куки
+ * @param name {String}
+ * @returns {Boolean}
+ */
+export function checkCookie(name) {
+  return !!document.cookie.split(";").filter(function (item) {
+    return item.trim().indexOf(`${name}=`) == 0;
+  }).length;
 }

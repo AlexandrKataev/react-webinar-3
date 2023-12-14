@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import useSelector from "../hooks/use-selector";
 import Main from "./main";
 import Basket from "./basket";
@@ -7,20 +7,21 @@ import Login from "./login";
 import Profile from "./profile";
 import { useEffect } from "react";
 import useStore from "../hooks/use-store";
+import { checkCookie } from "../utils";
 
 /**
  * Приложение
  * Маршрутизация по страницам и модалкам
  */
 function App() {
-  const activeModal = useSelector((state) => state.modals.name);
+  const select = useSelector((state) => ({
+    activeModal: state.modals.name,
+    user: state.user.data,
+  }));
   const store = useStore();
+
   useEffect(() => {
-    if (
-      document.cookie.split(";").filter(function (item) {
-        return item.trim().indexOf("token=") == 0;
-      }).length
-    ) {
+    if (checkCookie("token")) {
       store.actions.user.getUser();
     }
   }, []);
@@ -30,11 +31,13 @@ function App() {
       <Routes>
         <Route path={""} element={<Main />} />
         <Route path={"/articles/:id"} element={<Article />} />
-        <Route path={"/login"} element={<Login />} />
         <Route path={"/profile"} element={<Profile />} />
+
+        {!select.user && <Route path={"/login"} element={<Login />} />}
+        <Route path="*" element={<Navigate to="" />} />
       </Routes>
 
-      {activeModal === "basket" && <Basket />}
+      {select.activeModal === "basket" && <Basket />}
     </>
   );
 }

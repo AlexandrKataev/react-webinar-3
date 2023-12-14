@@ -4,11 +4,11 @@ import { cn as bem } from "@bem-react/classname";
 
 import "./style.css";
 
-function UserCard({ user }) {
+function UserCard({ user, t }) {
   const cn = bem("UserCard");
   return (
     <div className={cn()}>
-      <div className={cn("title")}>Профиль</div>
+      <div className={cn("title")}>{t("profile.title")}</div>
       <div className={cn("prop")}>
         <div className={cn("label")}>Имя:</div>
         <div className={cn("value")}>{user?.profile.name}</div>
@@ -26,7 +26,7 @@ function UserCard({ user }) {
 }
 
 UserCard.propTypes = {
-  onAdd: PropTypes.func,
+  user: PropTypes.object,
   t: PropTypes.func,
 };
 
