@@ -4,21 +4,23 @@ import useSelector from "../../hooks/use-selector";
 import useTranslate from "../../hooks/use-translate";
 
 import HeaderBar from "../../components/header-bar";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
 function Header() {
   const store = useStore();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const select = useSelector((state) => ({
-    user: state.user.data,
+    authData: state.auth.data,
   }));
 
   const callbacks = {
-    onClickLogout: useCallback(() => store.actions.user.logout(), [store]),
+    onClickLogout: useCallback(() => store.actions.auth.logout(), [store]),
 
     onClickLogin: useCallback(() => {
-      navigate("/login");
+      const currentPath = location.pathname;
+      navigate("/login", { state: { from: currentPath } });
     }, [store]),
   };
 
@@ -27,10 +29,10 @@ function Header() {
 
   return (
     <HeaderBar
-      isAuth={!!select.user}
+      isAuth={!!select.authData}
       onClickLogin={callbacks.onClickLogin}
       onClickLogout={callbacks.onClickLogout}
-      userName={select.user?.profile.name}
+      userName={select.authData?.profile.name}
     />
   );
 }

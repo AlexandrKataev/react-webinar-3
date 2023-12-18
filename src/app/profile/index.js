@@ -12,25 +12,19 @@ import LocaleSelect from "../../containers/locale-select";
 import UserCard from "../../components/user-card";
 import Header from "../../containers/header";
 import Spinner from "../../components/spinner";
-import { useNavigate } from "react-router";
+import useInit from "../../hooks/use-init";
 
 function Profile() {
   const store = useStore();
-  const navigate = useNavigate();
+
+  useInit(() => {
+    store.actions.user.load();
+  }, []);
 
   const select = useSelector((state) => ({
     user: state.user.data,
     waiting: state.user.waiting,
-    isError: state.user.error,
   }));
-
-  useEffect(() => {
-    !select.user && store.actions.user.getUser();
-  }, [select.user]);
-
-  useEffect(() => {
-    !!select.isError && navigate("/login");
-  }, [select.isError]);
 
   const { t } = useTranslate();
 

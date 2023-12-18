@@ -7,6 +7,7 @@ import Login from "./login";
 import Profile from "./profile";
 import { useEffect } from "react";
 import useStore from "../hooks/use-store";
+import AuthGuard from "../containers/auth-guard";
 import { checkCookie } from "../utils";
 
 /**
@@ -16,24 +17,31 @@ import { checkCookie } from "../utils";
 function App() {
   const select = useSelector((state) => ({
     activeModal: state.modals.name,
-    user: state.user.data,
+    authData: state.auth.data,
   }));
   const store = useStore();
 
   useEffect(() => {
     if (checkCookie("token")) {
-      store.actions.user.getUser();
+      !select.authData && store.actions.auth.checkAuth();
     }
-  }, []);
+  }, [select.authData]);
 
   return (
     <>
       <Routes>
         <Route path={""} element={<Main />} />
         <Route path={"/articles/:id"} element={<Article />} />
-        <Route path={"/profile"} element={<Profile />} />
+        <Route
+          path={"/profile"}
+          element={
+            <AuthGuard redirectPath={"/login"}>
+              <Profile />
+            </AuthGuard>
+          }
+        />
 
-        {!select.user && <Route path={"/login"} element={<Login />} />}
+        <Route path={"/login"} element={<Login />} />
         <Route path="*" element={<Navigate to="" />} />
       </Routes>
 

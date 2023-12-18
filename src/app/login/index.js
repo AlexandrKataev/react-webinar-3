@@ -1,4 +1,4 @@
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 
 import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
@@ -9,22 +9,26 @@ import LoginForm from "../../components/login-form";
 import useStore from "../../hooks/use-store";
 import useSelector from "../../hooks/use-selector";
 import useTranslate from "../../hooks/use-translate";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function Login() {
   const store = useStore();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
   const select = useSelector((state) => ({
-    userData: state.user.data,
-    error: state.user.error,
+    authData: state.auth.data,
+    error: state.auth.error,
   }));
 
   const callbacks = {
     // Отправка формы входа пользователя
     onLogin: useCallback(
-      (user) => {
-        store.actions.user.login(user);
+      (authDto) => {
+        store.actions.auth.login(authDto);
         setPassword("");
       },
       [store]
@@ -36,6 +40,17 @@ function Login() {
       setPassword(e.target.value);
     }, []),
   };
+
+  useEffect(() => {
+    const state = location.state;
+    if (select.authData) {
+      if (state?.from) {
+        navigate(state?.from);
+      } else {
+        navigate("/profile");
+      }
+    }
+  }, [select.authData]);
 
   const { t } = useTranslate();
   return (
