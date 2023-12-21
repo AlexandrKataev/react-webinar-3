@@ -1,0 +1,27 @@
+.NewReplyForm {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.NewReplyForm-title {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.NewReplyForm-body {
+  resize: none;
+  font-size: 14px;
+  border: ridge 2px;
+  padding: 5px;
+  width: 100%;
+  min-height: 5em;
+  overflow: auto;
+}
+.NewReplyForm-buttons {
+  display: flex;
+  gap: 10px;
+}

@@ -1,0 +1,33 @@
+.Comment {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.Comment-title {
+  display: flex;
+  gap: 10px;
+}
+
+.Comment-title-user {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.Comment-title-date {
+  color: #666666;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.Comment-text {
+  font-size: 14px;
+}
+
+.Comment-button {
+  color: #0087e9;
+  font-size: 12px;
+  cursor: pointer;
+}

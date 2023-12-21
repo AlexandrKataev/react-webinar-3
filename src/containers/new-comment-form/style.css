@@ -1,0 +1,23 @@
+.NewCommentForm {
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.NewCommentForm-title {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.NewCommentForm-body {
+  resize: none;
+  font-size: 14px;
+  border: ridge 2px;
+  padding: 5px;
+  width: 100%;
+  min-height: 5em;
+  overflow: auto;
+}
