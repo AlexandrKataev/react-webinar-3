@@ -6,7 +6,15 @@ import "./style.css";
 import { Link } from "react-router-dom";
 import { dateFormat } from "../../utils/date-format";
 
-function Comment({ userName, date, text, children, level, onReply }) {
+function Comment({
+  userName,
+  date,
+  text,
+  children,
+  level,
+  onReply,
+  isCurrentUser,
+}) {
   const cn = bem("Comment");
 
   // const callbacks = {
@@ -16,7 +24,13 @@ function Comment({ userName, date, text, children, level, onReply }) {
   return (
     <div style={{ marginLeft: level * 30 + "px" }} className={cn()}>
       <div className={cn("title")}>
-        <div className={cn("title-user")}>{userName}</div>
+        <div
+          className={
+            isCurrentUser ? cn("title-user-current") : cn("title-user")
+          }
+        >
+          {userName}
+        </div>
         <div className={cn("title-date")}>{dateFormat(date)}</div>
       </div>
       <div className={cn("text")}>

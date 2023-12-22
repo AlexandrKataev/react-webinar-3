@@ -16,6 +16,12 @@
   font-weight: 700;
 }
 
+.Comment-title-user-current {
+  color: #666666;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .Comment-title-date {
   color: #666666;
   font-size: 12px;

@@ -36,6 +36,7 @@ function CommentsList({}) {
 
   const select2 = useSelector((state) => ({
     exists: state.session.exists,
+    user: state.session.user,
   }));
 
   const commentsBulidedTree = useMemo(
@@ -85,6 +86,7 @@ function CommentsList({}) {
             date={comment.dateCreate}
             level={comment.level}
             onReply={() => callbacks.onReply(comment._id)}
+            isCurrentUser={comment.author._id === select2.user?._id}
           >
             {comment._id === currentCommentId && select2.exists && (
               <NewReplyForm
