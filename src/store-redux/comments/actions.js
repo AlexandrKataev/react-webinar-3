@@ -39,7 +39,27 @@ export default {
           body: JSON.stringify(commentDto),
           method: "POST",
         });
-        dispatch(this.load(getState().article.data._id));
+
+        dispatch({ type: "comments/refresh-start" });
+
+        try {
+          const res = await services.api.request({
+            url: `api/v1/comments?fields=items(_id,text,dateCreate,author(profile(name)),parent(_id,_type),isDeleted),count&limit=*&search[parent]=${
+              getState().article.data._id
+            }`,
+          });
+          // Комментарии загружены успешно
+          dispatch({
+            type: "comments/refresh-success",
+            payload: {
+              data: res.data.result.items,
+              count: res.data.result.count,
+            },
+          });
+        } catch (e) {
+          //Ошибка загрузки
+          dispatch({ type: "comments/refresh-error" });
+        }
       } catch (e) {
         //Ошибка загрузки
         dispatch({ type: "comments/create-error" });
