@@ -10,14 +10,14 @@ import shallowequal from "shallowequal";
 import Comment from "../../components/comment";
 
 import { buildNestedComments } from "../../utils/comments-tree";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import NewReplyForm from "../new-reply-form";
 import NewCommentForm from "../new-comment-form";
 
-function CommentsList({ articleId }) {
-  const store = useStore();
+function CommentsList({}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const articleId = useParams().id;
 
   const [currentCommentId, setCurrentCommentId] = useState(null);
 
@@ -29,7 +29,7 @@ function CommentsList({ articleId }) {
     (state) => ({
       comments: state.comments.data,
       count: state.comments.count,
-      waiting: state.article.waiting,
+      waiting: state.comments.waiting,
     }),
     shallowequal
   ); // Нужно указать функцию для сравнения свойства объекта, так как хуком вернули объект
@@ -72,8 +72,11 @@ function CommentsList({ articleId }) {
 
   return (
     <div style={{ padding: "25px 40px" }}>
-      <div style={{ fontSize: "24px" }}>Комментарии{`(${select.count})`}</div>
       <Spinner active={select.waiting}>
+        <div style={{ fontSize: "24px" }}>
+          Комментарии{`(${select.waiting ? "загрузка" : select.count})`}
+        </div>
+
         {commentsBulidedTree.map((comment) => (
           <Comment
             key={comment._id}

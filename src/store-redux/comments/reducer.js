@@ -9,7 +9,7 @@ export const initialState = {
 function reducer(state = initialState, action) {
   switch (action.type) {
     case "comments/load-start":
-      return { ...state, data: [], waiting: true };
+      return { ...state, data: [], count: 0, waiting: true };
 
     case "comments/load-success":
       return {
