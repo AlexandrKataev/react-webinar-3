@@ -1,4 +1,4 @@
-export function buildNestedComments(list, key = "_id") {
+export default function commentsTree(list, key = "_id") {
   let trees = {};
   let roots = {};
   for (const item of list) {
@@ -25,21 +25,5 @@ export function buildNestedComments(list, key = "_id") {
       if (roots[item[key]]) delete roots[item[key]];
     }
   }
-
-  const tree = Object.values(roots);
-
-  function getNestedComments(tree, level = -1, result = []) {
-    tree.forEach((item) => {
-      const newItem = { ...item, level };
-      result.push({ ...newItem, children: undefined });
-
-      if (item.children && item.children.length > 0) {
-        getNestedComments(item.children, level + 1, result);
-      }
-    });
-
-    return result;
-  }
-
-  return getNestedComments(tree).slice(1);
+  return Object.values(roots)[0].children;
 }

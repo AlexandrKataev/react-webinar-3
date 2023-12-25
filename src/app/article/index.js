@@ -13,7 +13,8 @@ import TopHead from "../../containers/top-head";
 import { useDispatch, useSelector } from "react-redux";
 import shallowequal from "shallowequal";
 import articleActions from "../../store-redux/article/actions";
-import CommentsList from "../../containers/comments-list";
+
+import Comments from "../../containers/comments";
 
 function Article() {
   const store = useStore();
@@ -60,7 +61,7 @@ function Article() {
           t={t}
         />
       </Spinner>
-      {select.article && <CommentsList articleId={select.article?._id} />}
+      {select.article && <Comments />}
     </PageLayout>
   );
 }

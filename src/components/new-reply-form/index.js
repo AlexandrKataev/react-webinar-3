@@ -1,8 +1,15 @@
-import { memo, useCallback, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 
 import "./style.css";
 
-function NewReplyForm({ onSend, type, parentId, onCancel }) {
+function NewReplyForm({ onSend, type, parentId, onCancel, level }) {
+  const ref = useRef();
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, []);
   const [text, setText] = useState("");
 
   const onClickSend = (parentId, type) => {
@@ -11,7 +18,11 @@ function NewReplyForm({ onSend, type, parentId, onCancel }) {
   };
 
   return (
-    <div className="NewReplyForm">
+    <div
+      ref={ref}
+      className="NewReplyForm"
+      style={{ marginLeft: level * 30 + "px" }}
+    >
       <div className="NewReplyForm-title">Новый ответ</div>
       <textarea
         value={text}
