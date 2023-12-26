@@ -1,3 +1,4 @@
+import React from "react";
 import Comment from "../../components/comment";
 import NewReplyForm from "../../components/new-reply-form";
 import UnauthorizedReplyMessage from "../../components/unauthorized-reply-message";
@@ -17,9 +18,8 @@ function RenderComments({
     <>
       {comments.map((comment) => {
         return (
-          <>
+          <React.Fragment key={comment._id}>
             <Comment
-              key={comment._id}
               userName={comment.author.profile.name}
               text={comment.text}
               date={comment.dateCreate}
@@ -56,7 +56,7 @@ function RenderComments({
                 level={level + 1 > 6 ? 7 : level + 1}
               />
             )}
-          </>
+          </React.Fragment>
         );
       })}
     </>
